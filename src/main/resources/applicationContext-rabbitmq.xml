@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+	http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+	<description>rabbitmq 连接服务配置</description>
+	<rabbit:connection-factory id="rabbitConnectionFactory"
+		host="127.0.0.1" port="5672" username="spiderMan" password="supermans"
+		virtual-host="/superman" />
+	<rabbit:admin connection-factory="rabbitConnectionFactory" />
+	<rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory"
+		exchange="SUPERMAN_EXCHANGE_A" message-converter="jsonMessageConverter" />
+	<bean id="jsonMessageConverter"
+		class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter" />
+
+	<rabbit:queue name="SUPERMAN_QUEUE_A" auto-declare="true"
+		id="SUPERMAN_QUEUE_A" />
+	<rabbit:direct-exchange name="SUPERMAN_EXCHANGE_A"
+		id="SUPERMAN_EXCHANGE_A">
+		<rabbit:bindings>
+			<rabbit:binding queue="SUPERMAN_QUEUE_A" key="SUPERMAN_QUEUE_A"></rabbit:binding>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<bean id="testConsumer" class="com.sapling.spiderMans.service.douban.Impl.TestConsumer" 
+		/> 
+	<rabbit:listener-container
+		connection-factory="rabbitConnectionFactory" prefetch="2" acknowledge="manual">
+		<rabbit:listener ref="testConsumer" method="onMessage"
+			queue-names="SUPERMAN_QUEUE_A" />
+	</rabbit:listener-container>
+</beans>

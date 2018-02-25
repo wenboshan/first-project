@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="gbk" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sapling.spiderMans.dao.DoubanUserDao">
+	<resultMap id="baseMap" type="com.sapling.spiderMans.pojo.douban.DoubanUser">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="NOTE_URL" property="userUrl" jdbcType="VARCHAR" />
+		<result column="LOCATION" property="location" jdbcType="VARCHAR" />
+		<result column="MAIN_PAGE_URL" property="mainPageUrl" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="COUNT1" property="count" jdbcType="VARCHAR" />
+	</resultMap>
+	<insert id="create" parameterType="com.sapling.spiderMans.pojo.douban.DoubanUser">
+		insert into DB_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="userName!=null">
+				USER_NAME,
+			</if>
+			<if test="noteURL!=null">
+				NOTE_URL
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userName!=null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="noteURL!=null">
+				#{userUrl,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<insert id="batchCreate" parameterType="java.util.List">
+		insert into DB_USER (USER_NAME,NOTE_URL,LOCATION,MAIN_PAGE_URL)
+		values
+		<foreach collection="list" index="index" item="og" separator=",">
+			(#{og.userName},#{og.noteUrl},#{og.location},#{og.mainPageUrl})
+		</foreach>
+	</insert>
+	<!-- <select id="count" resultType="long"> select count(*) from DB_USER 
+		</select> -->
+	<select id="countAll" resultType="long">
+		select count(*) from DB_USER a
+		where a.note_Num IS NULL
+	</select>
+	<select id="queryDoubanUserInfoByPageByInfo" parameterType="com.sapling.spiderMans.pojo.douban.DoubanUserInfo">
+		SELECT * FROM db_user a WHERE 1 = 1 and a.note_Num IS NOT NULL LIMIT
+		#{page},#{limit};
+	</select>
+	<select id="queryByPage" parameterType="com.sapling.spiderMans.pojo.douban.DoubanUser"
+		resultMap="baseMap">
+		select * from DB_USER a where 1=1
+		<if test="userName!=null">
+			and a.user_name=#{userName}
+		</if>
+		<if test="location!=null">
+			and a.location=#{userName}
+		</if>
+		LIMIT
+		#{page},#{limit};
+	</select>
+	<select id="count" parameterType="com.sapling.spiderMans.pojo.douban.DoubanUser"
+		resultType="long">
+		select count(*) from DB_USER a where 1=1
+		<if test="userName!=null">
+			and a.user_name=#{userName}
+		</if>
+		<if test="location!=null">
+			and a.location=#{userName}
+		</if>
+	</select>
+	<select id="queryChart" parameterType="com.sapling.spiderMans.pojo.douban.DoubanUser"
+		resultMap="baseMap">
+		SELECT
+		COUNT(*) count1,
+		a.location location
+		FROM DB_USER a
+		GROUP BY a.location
+		order by count(*) desc
+		</select>
+</mapper>
