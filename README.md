@@ -1,2 +1,2 @@
 # spiderMans
-ѧϰjava֪ʶ
+learn java
