@@ -1,6 +1,5 @@
 package com.sapling.spiderMans.controller;
 
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +16,8 @@ import com.sapling.spiderMans.util.CommonFactory;
 public class DoubanController extends BaseAction{
     @Autowired
     private DoubanSpiderService doubanSpiderService;
-    @Autowired
-    private AmqpTemplate amqpTemplate;
+    //    @Autowired
+    //    private AmqpTemplate amqpTemplate;
     /**
      * 定时器开启,第一个版本的定时器
      */

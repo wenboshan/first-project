@@ -9,5 +9,5 @@ public interface DoubanSpiderService {
     void doubanNotesBegin();
     ResultBean queryDoubanUserByPage(DoubanUser doubanUser);
     ResultBean queryDoubanUserByPageChart(DoubanUser doubanUser);
-    void sendMqMessage(String queueName,String message);
+    //    void sendMqMessage(String queueName,String message);
 }

@@ -1,4 +1,4 @@
-package spiderMans.test;
+package spiderMans.common;
 
 public class ByteTransferTest {
     public static void main(String[] args) {

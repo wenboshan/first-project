@@ -1,11 +1,9 @@
 package com.sapling.spiderMans.service.douban.Impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +25,8 @@ public class DoubanSpoiderServiceImpl implements DoubanSpiderService {
     protected final Logger logger = Logger.getLogger(this.getClass());
     @Autowired
     private DoubanUserDao doubanUserDao;
-    @Autowired
-    private AmqpTemplate amqpTemplate;
+    //    @Autowired
+    //    private AmqpTemplate amqpTemplate;
 
     // @Autowired
     // private DoubanUserInfoDao doubanUserInfoDao;
@@ -198,8 +196,8 @@ public class DoubanSpoiderServiceImpl implements DoubanSpiderService {
     /* (non-Javadoc)
      * @see com.sapling.spiderMans.service.douban.DoubanSpiderService#sendMqMessage(java.lang.String, java.lang.String)
      */
-    @Override
-    public void sendMqMessage(String queueName, String message) {
-        amqpTemplate.convertAndSend(queueName, "sssss"+new Date().toString());
-    }
+    //    @Override
+    //    public void sendMqMessage(String queueName, String message) {
+    //        amqpTemplate.convertAndSend(queueName, "sssss"+new Date().toString());
+    //    }
 }
