@@ -144,7 +144,9 @@ public class DoubanSpoiderServiceImpl implements DoubanSpiderService {
      */
     @Override
     public ResultBean queryDoubanUserByPage(DoubanUser doubanUser) {
+        logger.info("进入主方法");
         ResultBean resultBean = CommonFactory.getDefaultResultBean();
+        doubanUserDao=null;
         long size = doubanUserDao.count(doubanUser);
         resultBean.setCount(size);
         if (size != 0) {

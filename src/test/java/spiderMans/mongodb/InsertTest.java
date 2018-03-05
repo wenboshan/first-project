@@ -13,7 +13,6 @@ public class InsertTest extends MongoDbBaseTest   {
     private MongoTemplate mongoTemplate;
     @Test
     public void mongoDbInsert(){
-        //        doubanSpiderService.doubanBegin();
         mongoTemplate.insert(new User(new Date().getTime(),"zhangsan","20","男"));
     }
 }
